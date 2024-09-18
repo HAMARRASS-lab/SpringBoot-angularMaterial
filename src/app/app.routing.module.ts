@@ -9,7 +9,7 @@ import {LoginComponent} from "./login/login.component";
 import {StudentComponent} from "./student/student.component";
 import {PaymentComponent} from "./payment/payment.component";
 import {AdminTemplateComponent} from "./admin-template/admin-template.component";
-import {AuthGuard} from "./guards/auth.guard";
+import {AuthorizationGuard} from "./guards/authorization.guard";
 
 
 
@@ -17,15 +17,18 @@ const routes: Routes = [
 
   {path: "login", component :LoginComponent},
   {path: "admin", component :AdminTemplateComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children : [
       {path: "home", component :HomeComponent},
       {path: "profile", component :ProfileComponent},
-      {path: "loadStudent", component :LoadStudentComponent},
+      {path: "payments", component :PaymentComponent},
+      {path: "loadStudent", component :LoadStudentComponent
+      , canActivate : [AuthorizationGuard], data : {roles: ['ADMIN']}
+      },
       {path: "loadPayment", component :LoadPaymentComponent},
       {path: "dashboard", component :DashboardComponent},
       {path: "student", component :StudentComponent},
-      {path: "payment", component :PaymentComponent},
+
     ]},
 
  ];
