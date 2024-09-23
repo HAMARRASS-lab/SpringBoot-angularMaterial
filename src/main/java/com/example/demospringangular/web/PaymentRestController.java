@@ -6,25 +6,20 @@ import com.example.demospringangular.entries.PaymentType;
 import com.example.demospringangular.entries.Student;
 import com.example.demospringangular.repository.PaymentRepository;
 import com.example.demospringangular.repository.StudentRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin("*")
 public class PaymentRestController {
 
     private StudentRepository studentRepository;
@@ -43,7 +38,6 @@ public class PaymentRestController {
     public List<Payment> paymentsByStudent(@PathVariable  String code){
         return  paymentRepository.findByStudentCode(code);
     }
-
 
     @GetMapping(path="payments/{id}")
     public Payment getPaymentBy( @PathVariable  Long id){
