@@ -27,7 +27,7 @@ const routes: Routes = [
       },
       {path: "loadPayment", component :LoadPaymentComponent},
       {path: "dashboard", component :DashboardComponent},
-      {path: "student", component :StudentComponent},
+      {path: "students", component :StudentComponent},
 
     ]},
 
