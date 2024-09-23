@@ -34,7 +34,7 @@ public class DemoSpringAngularApplication {
                     .firstName("hassane").code("1122334466").programId("ka")
                     .build());
             studentRepository.save(Student.builder().id(UUID.randomUUID().toString())
-                    .firstName("Mohcine").code("1122334455").programId("ta")
+                    .firstName("Mouhcine").code("1122334455").programId("ta")
                     .build());
 
 
