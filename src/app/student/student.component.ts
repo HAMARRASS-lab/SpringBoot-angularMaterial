@@ -4,6 +4,7 @@ import {Student} from "../model/students.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-student',
@@ -14,15 +15,16 @@ export class StudentComponent implements  OnInit{
 
   students! : Array<Student>;
   public  dataSource :any ;
-  public displayedColumns  = ['id', 'code','firstName','lastName','programId','photo'];
-  constructor(private studentService : StudentsService) {
+  public displayedColumns  = ['id', 'code','firstName','lastName','programId','action'];
+  constructor(private studentService : StudentsService, private router: Router) {
   }
+  // students: Student[] = [];
 
   @ViewChild(MatPaginator) paginator! : MatPaginator;
   @ViewChild(MatSort) sort! : MatSort;
   ngOnInit(): void {
     this.studentService.getAllStudents().subscribe({
-      next : value  => {
+      next : (value :Student[]) => {
        this.students=value;
         this.dataSource= new  MatTableDataSource(this.students);
         this.dataSource.paginator = this.paginator;
@@ -31,6 +33,11 @@ export class StudentComponent implements  OnInit{
         console.log(err)
       }
     })
+  }
+  studentPayments(student:Student){
+// this.router.navigateByUrl(`/admin/student-details/${student.code}`);
+    this.router.navigateByUrl("/admin/student-details/"+student.code);
+
   }
 
 }

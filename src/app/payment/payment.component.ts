@@ -4,7 +4,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {StudentsService} from "../services/students.service";
 
-
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -13,13 +12,13 @@ import {StudentsService} from "../services/students.service";
 export class PaymentComponent implements OnInit{
 
   public payments : any;
- public  dataSource :any ;
- public displayedColumns  = ['id', 'date','amount','type','status','firstName'];
+  public  dataSource :any ;
+  public displayedColumns  = ['id', 'date','amount','type','status','firstName'];
   constructor( private studentService: StudentsService) {
   }
 
 @ViewChild(MatPaginator) paginator! : MatPaginator;
-  @ViewChild(MatSort) sort! :MatSort;
+@ViewChild(MatSort) sort! :MatSort;
 
   ngOnInit(): void {
     this.studentService.getAllPayments()
