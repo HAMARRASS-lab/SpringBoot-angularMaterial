@@ -1,11 +1,13 @@
 package com.example.demospringangular.web;
 
+import com.example.demospringangular.dtos.NewPaymentDTO;
 import com.example.demospringangular.entries.Payment;
 import com.example.demospringangular.entries.PaymentStatus;
 import com.example.demospringangular.entries.PaymentType;
 import com.example.demospringangular.entries.Student;
 import com.example.demospringangular.repository.PaymentRepository;
 import com.example.demospringangular.repository.StudentRepository;
+import com.example.demospringangular.services.PaymentService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +26,7 @@ public class PaymentRestController {
 
     private StudentRepository studentRepository;
     private PaymentRepository paymentRepository;
+    private PaymentService paymentService;
 
     public PaymentRestController(PaymentRepository paymentRepository,StudentRepository studentRepository){
         this.studentRepository=studentRepository;
@@ -43,6 +46,7 @@ public class PaymentRestController {
     public Payment getPaymentBy( @PathVariable  Long id){
         return  paymentRepository.findById(id).get();
     }
+
 
     @GetMapping(path="/paymentsByStatus")
     public List<Payment> paymentsByStatus(@RequestParam PaymentStatus status){
@@ -78,23 +82,9 @@ public class PaymentRestController {
     }
 
     @PostMapping(path = "/payments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Payment savePayment(@RequestParam  MultipartFile file, LocalDate date, double amount, PaymentType type, String studentCode) throws IOException {
-
-        Path folderPath= Paths.get(System.getProperty("user.home"),"enset-data","payments");
-        if(!Files.exists(folderPath)){
-            Files.createDirectories(folderPath);
-        }
-        String fileName= UUID.randomUUID().toString();
-        Path filePath=Paths.get(System.getProperty("user.home"),"enset-data","payments",fileName+".pdf");
-        Files.copy(file.getInputStream(),filePath);
-        Student student=studentRepository.findByCode(studentCode);
-        Payment payment=Payment.builder()
-                .date(date).type(type).student(student)
-                .amount(amount)
-                .status(PaymentStatus.CREATED)
-                .file(filePath.toUri().toString())
-                .build();
-        return  paymentRepository.save(payment);
+    public Payment savePayment(@RequestParam("file")  MultipartFile file, NewPaymentDTO newPaymentDTO) throws IOException {
+        System.out.println( "data "+ newPaymentDTO+"file" + file);
+        return  paymentService.savePayment(file,newPaymentDTO);
     }
 
     @GetMapping(path = "/paymentFile/{paymentId}",produces = MediaType.APPLICATION_PDF_VALUE)
