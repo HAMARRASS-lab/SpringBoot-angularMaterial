@@ -1,11 +1,3 @@
-mat-form-field{
-  display: block;
-}
-.payment-form{
-  width: 500px;
-  margin: auto;
-}
-
 .pdf-viewer{
   height: 100vh;
   display: block;
@@ -13,4 +5,3 @@ mat-form-field{
   max-width: 1200px;
   margin: 0 auto;
 }
-

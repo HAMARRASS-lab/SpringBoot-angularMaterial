@@ -18,7 +18,7 @@ export class StudentDetailsComponent implements OnInit{
   studentCode: any;
 
   paymentsDataSource: any ;
-  public displayedColumns  = ['id', 'date','amount','type','status','firstName'];
+  public displayedColumns  = ['id', 'date','amount','type','status','firstName','details'];
 
 constructor(private activatedRoute: ActivatedRoute, private studentService: StudentsService, private router : Router) {
 }
@@ -44,5 +44,9 @@ next : value => {
 
   }
 
+  paymentDetails(payment: any) {
+    this.router.navigateByUrl(`/admin/payment-details/${payment.id}`)
+
+  }
 
 }
